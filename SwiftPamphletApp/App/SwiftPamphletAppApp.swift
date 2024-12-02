@@ -17,6 +17,7 @@ import AppIntents
 
 @main
 struct SwiftPamphletAppApp: App {
+    
     // 启动时间打点
     private let launchStartTime = DispatchTime.now()
     private let signpostID = OSSignpostID(log: OSLog.default)
@@ -25,6 +26,7 @@ struct SwiftPamphletAppApp: App {
     #if os(macOS)
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     #elseif os(iOS)
+    @State private var metricsManager = MetricsManager()
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     #endif
     
@@ -73,7 +75,7 @@ struct SwiftPamphletAppApp: App {
                     TaskCase.good()
                     
                     // 任务管理器示例
-//                    taskgroupDemo()
+                    taskgroupDemo()
                     
                     if let processStartTime = Perf.getProcessRunningTime() {
                         // Post-main
@@ -154,7 +156,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 #elseif os(iOS)
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        _ = MetricKitManager.shared // 上报启动时间
         print("didFinishLaunchingWithOptions")
         return true
     }
