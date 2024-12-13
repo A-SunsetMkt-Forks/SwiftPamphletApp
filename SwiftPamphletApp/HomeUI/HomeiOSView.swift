@@ -13,6 +13,7 @@ struct HomeiOSView: View {
     var body: some View {
         EmptyView()
             .onOpenURL { url in
+                // SwiftPamphletApp://view?content=detail
                 if let content = URLComponents(url: url, resolvingAgainstBaseURL: true)?
                     .queryItems?.first(where: { $0.name == "content" })?.value {
                     if content == "detail" {
@@ -39,10 +40,10 @@ struct TaskCaseView: View {
                 .onAppear {
                     Perf.showTime("UI更新视图")
                 }
-            TaskCaseAnimationView(isBad: false)
-                .onAppear {
-                    Perf.showTime("动画视图")
-                }
+//            TaskCaseAnimationView(isBad: false)
+//                .onAppear {
+//                    Perf.showTime("动画视图")
+//                }
             TaskCaseBigImageView(isBad: false)
                 .onAppear {
                     Perf.showTime("大图处理视图")
